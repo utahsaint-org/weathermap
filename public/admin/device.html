@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>Weathermap 3.0</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body class=container>
+	<BR><BR>
+
+<div class="panel panel-primary">
+	<div class="panel-heading"><h3>Device Management</h3></div>
+	<div class="panel-body">
+		<p>The devices listed below will be polled for interface and vitals.</p>
+	</div>
+<!-- LIST OF DEVICES -->
+	<table class="table table-striped" id="devices">
+	<tr><th colspan=5><h4>Current List of Devices
+	    <span style="font-size: 13px; float:right">Search <input id="search"/> <span id="clear-search" style="display:none">X</span></span>
+	</h4></th></tr>
+	<tr>
+		<th>IP Address</th>
+		<th>Device Name</th>
+		<th>SNMP Community String</th>
+		<th>Last Successful Access</th>
+		<th></th>
+	</tr>
+	  <template id="device-row-template">
+	    {{#devices}}
+              <tr data-device-id="{{id}}">
+		<td>{{ip}}</td>
+		<td>{{name}}</td>
+		<td>{{community}}</td>
+		<td>{{refresh}}</td>
+		<td><button class="btn btn-danger btn-sm delete-button">X</button></td>
+              </tr>
+          {{/devices}}
+	  </template>
+
+
+<!-- ADD NEW DEVICE -->
+	<tr id="add-new-device">
+		<td><input type=text class=form-control name=ip placeholder="Device IP"></td>
+		<td >
+		<td><input type=text class=form-control name=community placeholder="Community String (optional)"></td>
+                <td />
+		<td><button id="add-button" class="btn btn-primary btn-sm ">Add</button></td>
+	</tr>
+
+	</table>
+</div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/mustache.min.js"></script>
+    <script>
+      $(function() {
+	  $.get('/api/device/list', function(data) {
+	      $('#add-new-device').before(Mustache.render($('#device-row-template').html(), { devices: data}));
+	  });
+
+	  $('#add-button').click(function() {
+	      var $btn = $(this),
+	          $add = $("#add-new-device"),
+	          ip = $add.find('[name=ip]').val();
+	      if (!ip) return;
+
+	      $btn.prop('disabled', true);
+	      $.ajax({ url: '/api/device',
+		       type: 'put',
+		       data: { ip: ip,
+			       community: $add.find('[name=community]').val() }
+		     }).always(function(data) {
+			 if ('responseText' in data) {
+			     // data is jqXHR type, so it's an error
+			 } else if ('error' in data) {
+			     // error
+			 } else {
+			     $add.find('input').each(function(e) { $(this).val(''); });
+			     var $newRow = $(Mustache.render($('#device-row-template').html(), {devices: [data.device]}));
+			     $newRow.hide();
+			     $('#add-new-device').before($newRow);
+			     $newRow.fadeIn('slow');
+			 }
+			 $btn.prop('disabled', false);
+		     });
+	  });
+
+	  $(document).on('click', '.delete-button', function() {
+	      $.ajax({ url: '/api/device/' + $(this).parents('tr').attr('data-device-id'),
+		       type: 'delete',
+		       context: $(this).parents('tr')
+		     }).always(function(data) {
+			 if ('responseText' in data) {
+			     // data is jqXHR type, so it's an error
+			 } else {
+			     $(this).hide('slow', function() { $(this).remove(); });
+			 }
+		     });
+	  });
+
+	  $('#clear-search').click(function() {
+	      $('#search').val('').trigger('change');
+	  });
+
+	  $('#search').change(function() {
+	      var val = $('#search').val().toLowerCase();
+	      if (val) {
+		  $('#clear-search').show();
+		  $('tr[data-device-id]').each(function(e) {
+		      if ($(this).text().toLowerCase().indexOf(val) != -1) {
+			  $(this).show();
+		      } else {
+			  $(this).hide();
+		      }
+		  });
+	      } else {
+		  $('#clear-search').hide();
+		  $('tr[data-device-id]').show();
+	      }
+	  });
+		      
+      });
+    </script>
+</body>
+</html>

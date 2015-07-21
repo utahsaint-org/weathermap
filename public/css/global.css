@@ -1,0 +1,87 @@
+body	{
+        margin: 0;
+	background: #080808;
+	text-align: center;
+	}
+
+span#time {
+      position: absolute;
+      bottom: 1%;
+      right: 1%;
+      font-family: HelveticaNeue-Light;
+      font-size: 12px;
+      color: #999;
+      margin-top: 0.5em;
+      margin-left: 0.5em;
+}
+
+span#time.error {
+      background-color: red;
+      font-weight: bold;
+      color: black;
+}
+
+span#site {
+    display: none;
+    position: absolute;
+    top: 1%;
+    right: 1em;
+    font-family: Helvetica;
+    font-size: 30px;
+    color: #999;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+}
+
+span#return {
+      display: none;
+      position: absolute;
+      top: 1%;
+      left: 1%;
+      font-family: Helvetica;
+      font-size: 12px;
+      color: #999;
+      margin-top: 0.5em;
+      margin-left: 0.5em;
+      cursor: pointer;
+}
+
+#bh	{
+	position: absolute;
+	top: 290px;
+	left: 975px;
+	}
+
+#logo {
+    display: none;
+    max-width: 200px;
+    max-height: 200px;
+    position: absolute;
+    border: none;
+    bottom: 2em;
+    right: 1em;
+    z-index: -999;
+    }
+
+#links {
+    position: absolute;
+    bottom: 1%;
+    right: 13%;
+}
+
+#links a {
+    text-decoration: none;
+    font-variant: small-caps;
+    color: #555;
+    padding-right: 0.25em;
+}
+
+#mapName    {
+    font-family: "HelveticaNeue-UltraLight";
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #fff;
+    font-size: 24px;
+    display: inline-block;
+    }

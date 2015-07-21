@@ -1,0 +1,53 @@
+/* Default Color Schema */
+
+.ub0	{ fill: #222222; }
+.ub1	{ fill: #006600; }
+.ub2	{ fill: #1f8f00; }
+.ub5	{ fill: #3f9f00; }
+.ub10	{ fill: #5faf00; }
+.ub15	{ fill: #7fbf00; }
+.ub20	{ fill: #9fcf00; }
+.ub25	{ fill: #bfdf00; }
+.ub30	{ fill: #dfef00; }
+.ub40	{ fill: #ffff00; }
+.ub50	{ fill: #ffbf00; }
+.ub60	{ fill: #ff7f00; }
+.ub70	{ fill: #ff5f00; }
+.ub80	{ fill: #ff0f00; }
+.ub90	{ fill: #ff0000; }
+.ub100	{ fill: #ff0000; }
+
+.util0	{ stroke: #222222; }
+.util1	{ stroke: #006600; }
+.util2	{ stroke: #1f8f00; }
+.util5	{ stroke: #3f9f00; }
+.util10	{ stroke: #5faf00; }
+.util15	{ stroke: #7fbf00; }
+.util20	{ stroke: #9fcf00; }
+.util25	{ stroke: #bfdf00; }
+.util30	{ stroke: #dfef00; }
+.util40	{ stroke: #ffff00; }
+.util50	{ stroke: #ffbf00; }
+.util60	{ stroke: #ff7f00; }
+.util70	{ stroke: #ff5f00; }
+.util80	{ stroke: #ff0f00; }
+.util90	{ stroke: #ff00ff; }
+.util100	{ stroke: #ff00ff; }
+
+#stub0	{ stroke-width: 0; fill: #222222; }
+#stub1	{ stroke-width: 0; fill: #006600; }
+#stub2	{ stroke-width: 0; fill: #1f8f00; }
+#stub5	{ stroke-width: 0; fill: #3f9300; }
+#stub10	{ stroke-width: 0; fill: #5faf00; }
+#stub15	{ stroke-width: 0; fill: #7fbf00; }
+#stub20	{ stroke-width: 0; fill: #9fcf00; }
+#stub20	{ stroke-width: 0; fill: #9fcf00; }
+#stub25	{ stroke-width: 0; fill: #bfdf00; }
+#stub30	{ stroke-width: 0; fill: #dfef00; }
+#stub40	{ stroke-width: 0; fill: #ffff00; }
+#stub50	{ stroke-width: 0; fill: #ffbf00; }
+#stub60	{ stroke-width: 0; fill: #ff7f00; }
+#stub70	{ stroke-width: 0; fill: #ff5f00; }
+#stub80	{ stroke-width: 0; fill: #ff0f00; }
+#stub90	{ stroke-width: 0; fill: #ff0000; }
+#stub100	{ stroke-width: 0; fill: #ff0000; }

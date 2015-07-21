@@ -1,0 +1,140 @@
+{
+    "mapName": "Utah Education Network Backbone (UEN)",
+    "acronym": "Backbone",
+    "logo": "uen_logo.png",
+
+    "updateInterval": 30,
+
+    "linkStyle": { "maxWidth": 13, "minWidth": 5 },
+
+    "utilizationColors": {
+		"100": "#ff0000",
+		"90": "#ff0000",
+        "80": "#ff0f00",
+        "70": "#ff5f00",
+		"60": "#ff7f00",
+        "50": "#ffbf00",
+        "40": "#ffff00",
+        "30": "#dfef00",
+        "25": "#bfdf00",
+		"20": "#9fcf00",
+        "15": "#7fbf00",
+        "10": "#5faf00",
+        "5": "#3f9f00",
+        "2": "#1f8f00",
+        "1": "#006600",
+		"0": "#333333",
+		"-1": "blue"
+    },
+
+
+    "nodes": {
+		"USU":	{ "coords": [200, 50], "link": "?site=usu" },
+		"WSU":	{ "coords": [425, 50], "link": "?site=wsu" },
+		"DATC":	{ "coords": [640, 100], "link": "?site=dat" },
+
+		"INFW":	[50, 700, "square"],
+
+		"DSU":	{ "coords": [200, 700], "link": "?site=dix" },
+		"SUU":	{ "coords": [425, 700], "link": "?site=suu" },
+		"RDC":	{ "coords": [640, 650], "link": "?site=rdc" },
+
+		"SCS":	[500, 570],
+		"SNOW":	{ "coords": [850, 650], "link": "?site=sno" },
+
+		"TR":	{ "coords": [200, 350], "type":"square", "label": ["i2 +","TR"] },
+		"SEA":	[60, 370, "square"],
+		"LA":	[100, 460, "square"],
+		"CHI":	[200, 470, "square"],
+
+		"COG":	[90, 130, "square"],
+		"I2":	{ "coords": [50, 280], "type":"square", "label": "i2" },
+
+		"LV3":	{ "coords": [300, 250], "link": "?site=lv3" },
+		"SCC":	{ "coords": [300, 500], "link": "?site=scc" },
+		"INTG":	[50, 580, "square"],
+
+		"AKM":	[800, 450, "square"],
+		"GOOG":	[800, 350, "square"],
+
+		"EBC":	{ "coords": [850, 200], "link": "?site=ebc" },
+		"UVU":	{ "coords": [850, 550], "link": "?site=uvu" },
+		"XO":	[920, 410, "square"],
+
+		"ZAYO":	[350, 350, "square"],
+		"CLNK":	[350, 425, "square"],
+
+		"UVW":	{ "coords": [1050, 450], "link": "?site=uvw" },
+		"UBATC":	{ "coords": [1250, 450], "link": "?site=ubr" },
+		"USUE":	{ "coords": [1050, 550], "link": "?site=usue" },
+		"MOAB":	{ "coords": [1250, 550], "link": "?site=usue" },
+		"USUSJ":	{ "coords": [1250, 650], "link": "?site=usue" },
+
+		"DDC":	{ "coords": [550, 400], "link": "?site=ddc" },
+
+		"UEN":	{ "coords": [1250, 300] },
+		"INET":	{ "coords": [1250, 50] }
+		},
+
+    "links": {
+	"USU-EBC": { "bw": "10G" },
+	"USU-WSU": { "bw": "10G" },
+	"WSU-DAT": { "bw": "10G", "nodes": ["WSU", "DATC"] },
+	"DDC-LV3": { "bw": "100G" },
+	"DDC-SCC": { "bw": "10G", "inLabelDelta": [13,-10] },
+	"DDC-EBC": { "bw": "10G", "linkDelta": [-20, -10], "nodes": ["DDC","EBC"] },
+	"DDC-EBC-2,EBC-DDC-2": { "bw": "10G", "linkDelta": [0, 20], "nodes": ["DDC","EBC"] },
+	"DDC-UVU": { "bw": "10G" },
+	"DDC-ZAYO": { "bw": "10G" },
+	"DDC-CLINK": { "bw": "10G", "nodes": ["DDC","CLNK"] },
+
+	"DIX-SUU": { "bw": "10G", "nodes": ["DSU","SUU"] },
+	"SUU-RDC": { "bw": "10G" },
+
+	"SCS-RDC": { "bw": "1G", "outLabelDelta": [0, 3], "inLabelDelta": [0, -3] },
+	"RDC-SNO": { "bw": "1G", "nodes": ["RDC", "SNOW"] },
+	"UVU-SNO": { "bw": "1G", "nodes": ["UVU", "SNOW"] },
+
+	"DDC-Google": { "bw": "10G", "nodes": ["DDC", "GOOG"] },
+	"DDC-Akamai": { "bw": "20G", "nodes": ["DDC", "AKM"] },
+
+	"EBC-DAT": { "bw": "10G", "nodes": ["EBC","DATC"] },
+	"EBC-UVW": { "bw": "10G", "nodes": ["EBC","UVW"] },
+
+	"TRSEA-LV3": { "bw": "100G", "nodes": ["SEA", "TR"] },
+	"TRCHI-LV3": { "bw": "100G", "inLabelDelta": [0,10], "nodes": ["CHI", "TR"] },
+	"TRLA-LV3": { "bw": "100G", "inLabelDelta": [-5,0], "nodes": ["LA", "TR"] },
+	"TR-LV3": { "bw": "100G", "inLabelDelta": [-8,0], "nodes": ["TR", "LV3"] },
+
+	"COGENT-LV3": { "bw": "10G", "inLabelDelta": [-18,-12], "nodes": ["COG","LV3"] },
+	"INTERNET2-LV3": { "bw": "100G", "nodes": ["I2", "TR"], "inLabelDelta": [-10, 0], "add": ["INTERNET2-LV3-2"] },
+
+	"EBC-LV3-MR1": { "bw": "10G", "linkDelta": [-30, -30], "nodes": ["EBC","LV3"] },
+	"EBC-LV3-MR2": { "bw": "10G", "linkDelta": [-30, -10], "nodes": ["EBC","LV3"] },
+	"EBC-LV3-MR3": { "bw": "10G", "linkDelta": [-30, 10], "nodes": ["EBC","LV3"] },
+	"EBC-LV3-MR4": { "bw": "100G", "linkDelta": [-30, 30], "nodes": ["EBC","LV3"] },
+	"UVU-SCC": { "bw": "10G", "linkDelta": [-20, -20], "inLabelDelta": [20,0], "outLabelDelta": [-30, -7] },
+	"UVU-EBC": { "bw": "10G" },
+	"UVU-RDC": { "bw": "10G" },
+	"UVU-XO": { "bw": "10G", "dx": 10, "dy": -10, "outLabelDelta": [5, -10] },
+
+	"UVU-UVW": { "bw": "1G", "linkDelta": [-15, -5], "outLabelDelta": [15, -5] },
+	"UVU-UVW-2": { "bw": "1G", "linkDelta": [0, 15], "outLabelDelta": [15, -5], "nodes":["UVU","UVW"] },
+	"UVU-USUE": { "bw": "1G" },
+	"UVW-UBA": { "bw": "1G", "nodes": ["UVW", "UBATC"] },
+	"USUE-UBA": { "bw": "1G", "nodes": ["USUE", "UBATC"] },
+	"USUE-MOA": { "bw": "1G", "nodes": ["USUE", "MOAB"] },
+	"MOA-BLND": { "bw": "1G", "nodes": ["MOAB", "USUSJ"] },
+
+	"USU-LV3": { "bw": "10G" },
+	"LV3-SCC": { "bw": "10G" },
+
+	"DIX-Integra": { "bw": "10G", "inLabelDelta": [5,0], "nodes": ["DSU", "INTG"] },
+
+	"SCC-DIX": { "bw": "10G", "nodes": ["SCC", "DSU"] },
+	"PEER-DIX": { "bw": "1G", "nodes": ["INFW", "DSU"], "inLabelDelta": [-5,0], "outLabelDelta": [3,0] },
+	"UVU-XO-dupe": { "bw": "30G", "nodes": ["UEN", "INET"], "add": ["COGENT-LV3.reverse", "TR-LV3.reverse", "DIX-Integra", "DDC-ZAYO", "DDC-CLINK"] }
+    },
+    "utilizationURL": "/api/utilization",
+    "recheckConfig": 60
+}

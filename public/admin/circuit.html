@@ -1,0 +1,331 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>Weathermap 3.0</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+<style>
+td[data-interface-direction=I]:after { content: "In"; }
+td[data-interface-direction=O]:after { content: "Out"; }
+td.seconds:after { content: "s"; }
+.group-left-border, tr.AZ td:nth-child(2), tr.AZ td:nth-child(5), tr.AZ th:nth-child(2), tr.AZ th:nth-child(5) {
+  border-left: 1px #EEE solid;
+}
+.group-right-border, tr.AZ td:nth-child(7), tr.AZ th:nth-child(7) {
+  border-right: 1px #EEE solid;
+}
+.delete-button { padding-left: 0.2em; }
+select.device { width: 10em; }
+select.interface { width: 10em; }
+#clear-search { left: -20px; top:2px; display: inline-block; }
+.hover-red:hover { color: red; }
+.hover-green:hover { color: green; }
+.hover-point:hover { cursor: pointer; cursor: hand; }
+.green { color: green; }
+.red { color: red; }
+.no-show { display: none; }
+</style>
+</head>
+<body class=container>
+	<BR><BR>
+
+<div class="panel panel-primary">
+	<div class="panel-heading"><h3>Circuit Management</h3></div>
+	<div class="panel-body">
+		<p>The circuits listed below will be polled for interface and vitals.</p>
+	</div>
+<!-- LIST OF DEVICES -->
+	<table class="table table-striped" id="circuits">
+	<thead>
+	<tr><th colspan=9><h4>Current List of Circuits
+	    <span style="font-size: 13px; float:right"> <input id="search" placeholder="Search"/> <span id="clear-search" style="z-index:-999" class="glyphicon glyphicon-remove-circle hover-red"></span></span>
+	</h4></th></tr>
+	<tr>
+		<th/>
+		<th colspan=3 class="group-left-border" style="text-align: center; border-bottom: none">A End</th>
+		<th colspan=3 class="group-left-border group-right-border" style="text-align: center; border-bottom: none">Z End</th>
+		<th/>
+	</tr>
+	<tr class="AZ">
+		<th>Name</th>
+		<th>Device</th>
+		<th>Interface</th>
+		<th>Direction</th>
+		<th>Device</th>
+		<th>Interface</th>
+		<th>Direction</th>
+		<th>Poll</th>
+		<th/>
+	</tr>
+	</thead>
+	<tbody>
+	  <template id="circuit-row-template">
+	    {{#circuits}}
+	    <tr data-circuit-id="{{id}}" class="AZ">
+		<td data-name="name" data-value="{{name}}">{{name}}</td>
+		<td data-name="a_device_id" data-value="{{ends.A.interface.device_id}}">{{ends.A.interface.device_name}}</td>
+		<td data-name="a_interface_id" data-value="{{ends.A.interface.id}}" title="{{ends.A.interface.description}}">{{ends.A.interface.short_name}}</td>
+		<td data-name="a_direction" data-value="{{ends.A.direction}}" data-interface-direction="{{ends.A.direction}}"><!-- CSS content: rule fills in value --></td>
+		<td data-name="z_device_id" data-value="{{ends.Z.interface.device_id}}">{{ends.Z.interface.device_name}}</td>
+		<td data-name="z_interface_id" data-value="{{ends.Z.interface.id}}" title="{{ends.Z.interface.description}}">{{ends.Z.interface.short_name}}</td>
+		<td data-name="z_direction" data-value="{{ends.Z.direction}}" data-interface-direction="{{ends.Z.direction}}"><!-- CSS content: rule fills in value --></td>
+		<td data-name="poll_frequency" data-value="{{poll_frequency}}" class="seconds">{{poll_frequency}}</td>
+		<td style="white-space:nowrap; min-width: 43px" class="buttons">
+		  <span style="font-size: 12px" class="no-show">
+		    <span class="edit-button glyphicon glyphicon-pencil hover-green" title="Edit circuit"></span>
+		    <span class="delete-button glyphicon glyphicon-trash hover-red" title="Delete circuit"></span>
+		  </span>
+		</td>
+              </tr>
+          {{/circuits}}
+	  </template>
+
+
+<!-- ADD NEW DEVICE -->
+	<tr id="add-new-circuit" class="AZ">
+		<td><input type=text class=form-control name=name placeholder="Name" /></td>
+		<td><select class="form-control A device input-small" name=a_device_id><option/></select></td>
+		<td><select class="form-control A interface" name=a_interface_id><option /></select></td>
+		<td><select class="form-control" name=a_direction><option/><option value="I">In</option><option value="O">Out</option></select></td>
+		<td><select class="form-control Z device" name=z_device_id><option /></select></td>
+		<td><select class="form-control Z interface" name=z_interface_id><option/></select></td>
+		<td><select class="form-control" name=z_direction><option/><option value="I">In</option><option value="O">Out</option></select></td>
+		<td><input type=text class=form-control name=poll_frequency size="4" maxlength="3" data-default-value="300"/></td>
+                <td style="white-space:nowrap">
+		  <span id="add-button" style="font-size:22px; top:5px; font-weightj: bold" class="glyphicon glyphicon-plus-sign green hover-point"></span>
+		  <span class="save-edit-button glyphicon glyphicon-ok edit-mode no-show green hover-point" title="Save changes"></span>
+		  <span class="cancel-edit-button glyphicon glyphicon-remove edit-mode no-show red hover-point" title="Cancel changes"></span>
+		</td>
+		<template id="device-option-template">
+		  {{#devices}}
+		  <option class="added" value="{{id}}">{{name}}: {{ip}}</option>
+		  {{/devices}}
+		</template>
+		<template id="interface-option-template">
+		  {{#interfaces}}
+		  <option class="added" value="{{id}}">{{short_name}} ({{snmp_index}}): {{description}}</option>
+		  {{/interfaces}}
+		</template>
+	</tr>
+	</tbody>
+	</table>
+</div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/mustache.min.js"></script>
+    <script>
+      $(function() {
+	  $.get('/api/circuit/list', function(data) {
+	      $.each(data, function(_, circuit) {
+		  circuit.json = JSON.stringify(circuit);
+		  if (circuit.ends && circuit.ends.A && circuit.ends.A.interface && circuit.ends.A.interface.device_name)
+		      circuit.ends.A.interface.device_name = circuit.ends.A.interface.device_name.replace('.uen.net','');
+		  if (circuit.ends && circuit.ends.Z && circuit.ends.Z.interface && circuit.ends.Z.interface.device_name)
+		      circuit.ends.Z.interface.device_name = circuit.ends.Z.interface.device_name.replace('.uen.net','');
+	      });
+	      $('#add-new-circuit').after(Mustache.render($('#circuit-row-template').html(), { circuits: data}));
+	  });
+
+	  $(document).on('populate', 'select.interface', function() {
+	      var $this = $(this);
+
+	      $this.find('option.added').remove();
+
+	      var device_id = $this.parents('tr').find("select.device." + ($this.hasClass("A") ? "A" : "Z")).val();
+	      if (device_id) {
+		  $.get('/api/device/' + device_id + '/interface/list?active=1&mpls=0', function(data) {
+		      $this.find('option').after(Mustache.render($('#interface-option-template').html(), { interfaces: data }));
+		      $this.trigger('populated');
+		  });
+	      }
+	  });
+
+	  $(document)
+	      .on('populate', 'select.device', function() {
+		  var $this = $(this);
+
+		  $this.find('option.added').remove();
+		  $.get('/api/device/list', function(data) {
+                      $this.find('option').after(Mustache.render($('#device-option-template').html(), { devices: data }));
+		      $this.trigger('populated');
+		  });
+	      })
+	      .on('change', 'select.device', function() {
+		  var $this = $(this);
+
+		  $this.parents('tr').find("select.interface." + ($this.hasClass("A") ? "A" : "Z")).trigger('populate');
+	      });
+	  $('select.device').trigger('populate');
+
+	  function populateDefaultValues() {
+	      $('input[data-default-value]').each(function() {
+		  var $this = $(this);
+
+		  $this.val($this.attr('data-default-value'));
+	      });
+	  }
+	  populateDefaultValues();
+
+	  $(document).on('click', '#add-button, .save-edit-button', function() {
+	      var $this = $(this),
+	          $row = $this.parents('tr'),
+	          isAdd = $row.is('#add-new-circuit'),
+                  data = {},
+	          hasError = false;
+
+	      $row.find(':input[name]').each(function(e) {
+		  var $this = $(this),
+		      $td = $this.parents('td'),
+		      name = $this.attr('name'),
+		      val = $this.val();
+
+		  if (!name) return;
+
+		  if (val) {
+		      $td.removeClass('has-error');
+		      data[name] = val;
+		  } else {
+		      $td.addClass('has-error');
+		      hasError = true;
+		  }
+	       });
+	      
+	      editing = false;
+	      if (hasError) return false;
+
+	      var circuit_id = ($row.attr('id').match(/(\d+)/) || [])[1];
+	      $.ajax({ url: '/api/circuit' + (isAdd ? '' : '/' + circuit_id),
+		       type: isAdd ? 'put' : 'post',
+		       data: data
+		     }).always(function(data) {
+			 if ('responseText' in data) {
+			     // data is jqXHR type, so it's an error
+			 } else if ('error' in data) {
+			     // error
+			 } else {
+			     if (isAdd) {
+				 // Reset input fields
+				 $row.find('input').each(function(e) { $(this).val('') });
+				 populateDefaultValues();
+
+				 // Reset dropdowns
+				 $row.find('select').find('option:selected').prop('selected', false);
+				 $row.find('select.device').trigger('change');
+			     } else {
+				 $('tr[data-circuit-id=' + circuit_id + ']').remove();
+			     }
+
+			     // Add the new row
+			     var $newRow = $(Mustache.render($('#circuit-row-template').html(), {circuits: [data.circuit]}));
+			     $newRow.hide();
+			     $row.after($newRow);
+
+			     if (!isAdd) $row.remove();
+			     $newRow.fadeIn('slow');
+			 }
+		     });
+	  });
+
+	  var editing;
+	  $(document).on('mouseenter', 'tr', function() {
+	      if (!editing)
+		  $(this).find('td.buttons > span').show();
+	  });
+
+	  $(document).on('mouseleave', 'tr', function() {
+	      if (!editing)
+		  $(this).find('td.buttons > span').hide();
+	  });
+
+	  $(document).on('click', '.edit-mode.cancel-edit-button', function() {
+	      var $this = $(this),
+	          $row = $this.parents('tr'),
+	          circuit_id = ($row.attr('id').match(/(\d+)/) || [])[1];
+
+	      $row.remove();
+	      $('tr[data-circuit-id=' + circuit_id + ']').fadeIn('slow').find('td.buttons > span').hide();
+	      editing = false;
+	  });
+
+	  $(document).on('click', '.edit-button', function() {
+	      var $this = $(this),
+	      $parent = $this.parents('td'),
+	      $pparent = $parent.parent(),
+	      circuit_id = $this.parents('tr').attr('data-circuit-id');
+	      $parent.find('td.buttons > span').hide();
+	      editing = true;
+
+	      var $clone = $('#add-new-circuit').clone().attr('id', 'edit-circuit-' + $this.parents('tr').attr('data-circuit-id')).wrap('<td>');
+	      $clone
+	          .find('td:last').css('padding-top','15px').end()
+	          .find('.has-error').removeClass('has-error').end()
+		  .find('#add-button').remove().end()
+		  .find('input').each(function(e) {
+		      var $this = $(this);
+		      $this.val($pparent.find('[data-name=' + $this.attr('name') + ']').attr('data-value'));
+		  }).end()
+		  .find('select:has(option[value])').each(function(e) {
+		      var $this = $(this);
+		      $this.find('option').prop('selected', false);
+		      $this.find('option[value=' + $pparent.find('[data-name=' + $this.attr('name') + ']').attr('data-value') + ']').prop('selected', true);
+		  }).end();
+	      $pparent.hide().after($clone);
+	      $('#' + $clone.filter('tr').attr('id'))
+		  .find('select').not(':has(option[value])').each(function(e) {
+		      var $this = $(this);
+		      $this.one('populated', function() {
+			  var $this = $(this);
+			  $this.find('option[value=' + $pparent.find('[data-name=' + $this.attr('name') + ']').attr('data-value') + ']').prop('selected', true);
+		      });
+		      $this.trigger('populate');
+		  }).end().end()
+		  .find('.edit-mode').fadeIn('slow');
+	  });
+
+	  $(document).on('click', '.delete-button', function() {
+	      var $this = $(this),
+	          $tr = $this.parents('tr');
+	      $tr.addClass('red');
+	      if (confirm("Confirm - delete circuit '" + $tr.find('td:first').text() + "'?")) {
+		  $.ajax({ url: '/api/circuit/' + $tr.attr('data-circuit-id'),
+			   type: 'delete',
+			   context: $tr
+			 }).always(function(data) {
+			     editing = false;
+			     if ('responseText' in data) {
+				 // data is jqXHR type, so it's an error
+			     } else {
+				 $tr.hide('slow', function() { $tr.remove(); });
+			     }
+			 });
+	      } else {
+		  $tr.removeClass('red');
+	      }
+	  });
+	  $('#clear-search').click(function() {
+	      $('#search').val('').trigger('change');
+	  });
+
+	  $('#search').change(function() {
+	      var val = $('#search').val().toLowerCase();
+	      if (val) {
+		  $('#clear-search').removeAttr('style');
+		  $('tr[data-circuit-id]').each(function(e) {
+		      var $this = $(this);
+		      if ($this.text().toLowerCase().indexOf(val) != -1) {
+			  $this.show();
+		      } else {
+			  $this.hide();
+		      }
+		  });
+	      } else {
+		  $('#clear-search').attr('style','z-index:-999'); // "Hide" the button
+		  $('tr[data-circuit-id]').show();
+	      }
+	  });
+		      
+      });
+    </script>
+</body>
+</html>

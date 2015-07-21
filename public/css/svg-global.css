@@ -1,0 +1,61 @@
+svg     {
+	width: 100%;
+	height: 90%;
+}
+text	{
+	font-family: HelveticaNeue-Normal, Helvetica;
+	}
+
+text.ub	{
+	/* This defines the size and color of the 
+	   text in the Utilization Legend box */
+	fill: #fff;
+	font-size: 10px;
+	font-family: consolas, courier;
+	}
+
+
+/* Bandwidth Label Box Contains:  2.5G Example */
+rect.label	{ fill: #000; stroke: #ccc; stroke-width: 0.5; }
+text.label	{
+		letter-spacing: 1.5;
+		font-family: consolas, courier;
+		fill: #fff;
+		font-size: 15.5px;
+}
+
+/* Set the default stroke width for all map elements */
+circle,rect	{ cursor: pointer; stroke-width: 3px; }
+
+/* Node Definition for standard node DEFAULT */
+circle.node	{ fill: #c00; stroke: #f00; }
+circle.node:hover { fill: #500; stroke-width: 3px; }
+text.node	{ pointer-events: none; fill: #fff; font-size: 12px; text-anchor: middle; baseline-shift: -40%; cursor: pointer; }
+
+/* Edge node */
+circle.edge	{ fill: #d40; stroke: #f60; }
+circle.edge:hover { fill: #610; stroke-width: 3px; }
+text.edge	{ pointer-events: none; fill: #fff; font-size: 12px; text-anchor: middle; baseline-shift: -40%; cursor: pointer; }
+
+rect.edge	{ fill: #c3c; stroke: #f3f; }
+rect.edge:hover	{ fill: #606; }
+text.edge	{ pointer-events: none; fill: #fff; font-size: 13px; text-anchor: middle; baseline-shift: -35%; cursor: pointer; }
+
+circle.device     {
+        fill: #000;
+        stroke: #fff;
+        stroke-width: 4px;
+        }
+circle.device:hover       {
+        fill: #c60;
+        stroke-width: 3px;
+        }
+
+circle.ibr      {
+        fill: #fff;
+        stroke: black;
+        stroke-width: 5px;
+        }
+circle.ibr:hover        {
+        fill: #c06;
+        }

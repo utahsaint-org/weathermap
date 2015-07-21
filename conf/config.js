@@ -1,0 +1,3 @@
+module.exports = {
+    defaultCommunity: '<your default SNMP community string',
+};

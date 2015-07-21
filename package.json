@@ -1,0 +1,25 @@
+{
+  "name": "weathermap",
+  "version": "3.0.0",
+  "description": "UEN Weathermap",
+  "main": "app.js",
+  "dependencies": {
+    "express": "~3.4.4",
+    "mysql": "~2.0.0-alpha9",
+    "underscore": "~1.7.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/proguen/weathermap.git"
+  },
+  "author": "UEN",
+  "license": "UEN",
+  "bugs": {
+    "url": "https://github.com/proguen/weathermap/issues"
+  },
+  "homepage": "https://github.com/proguen/weathermap"
+}

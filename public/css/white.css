@@ -1,0 +1,42 @@
+line	{
+	fill: #000;
+	stroke: #090;
+	}
+
+line.huncen	{ stroke-width: 15px; stroke: #0c0;} 
+line.hunmeg	{ stroke-width: 6px; stroke: #000;} 
+line.onegig	{ stroke-width: 10px; } 
+line.tengig	{ stroke-width: 15px; } 
+line.hungig	{ stroke-width: 20px; } 
+
+path.ppath	{
+	stroke-width: 10px;
+	stroke: blue;
+	}
+
+circle.node	{
+	fill: #fff;
+	stroke: #000;
+	stroke-width: 4px;
+	}
+circle.node:hover	{
+	fill: #c60;
+	stroke-width: 3px;
+	}
+
+circle.ibr	{
+	fill: #fff;
+	stroke: black;
+	stroke-width: 5px;
+	}
+circle.ibr:hover	{
+	fill: #c06;
+	}
+
+text	{
+	font-weight: bold;
+	font-family: helvetica;
+	font-size: 12px;
+	text-anchor: middle;
+	baseline-shift: -40%;
+	}
