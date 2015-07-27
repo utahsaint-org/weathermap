@@ -38,7 +38,7 @@ CREATE TABLE `interface` (
   `description` varchar(255) DEFAULT NULL,
   `status` tinyint(3) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) DEFAULT CHARSET=latin1;
 
 CREATE TABLE `interface_raw_poll` (
   `interface_id` int(10) unsigned DEFAULT NULL,
