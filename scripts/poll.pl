@@ -7,15 +7,16 @@ use SNMP;
 use Carp;
 use Time::HiRes qw/gettimeofday tv_interval/;
 
-my $log_file = "/var/log/snmp_poller.log";
+my $log_file = "/var/log/weathermap_poller.log";
 my $db = Database->db;
 
 # Track devices being polled to prevent dups
 my %polling;
 my $poll_wait = 5; # Wait 5 seconds before re-trying
+my $default_community;
 
 while (1) {
-  eval { chomp($default_community = `node -e 'console.log(require("/opt/weathermap/conf/config.js").defaultCommunity)' 2>/dev/null`); };
+  eval { chomp($default_community = `nodejs -e 'console.log(require("/opt/weathermap/conf/config.js").defaultCommunity)' 2>/dev/null`); };
 
   my $start = [gettimeofday];
   poll_ints();
@@ -44,7 +45,7 @@ sub poll_ints {
 			     'interface_id, ip, community, snmp_index, 64bit, circuit_id, circuit_name',
 			     { next_poll => [ -or => undef, {'<=', time() }] })->hashes}) {
     my $ip = $int->{ip};
-    $devices{$ip} = { ip => $ip, community => $int->{community}, ints => {} }
+    $devices{$ip} = { ip => $ip, community => $int->{community} || $default_community, ints => {} }
       unless $devices{$ip};
     $devices{$ip}->{ints}->{$int->{snmp_index}} = { map { ( $_ => $int->{$_} ) } qw/interface_id snmp_index 64bit circuit_id/ };
   }

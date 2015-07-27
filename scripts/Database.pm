@@ -6,7 +6,7 @@ use DBIx::Simple;
 our $connection;
 
 sub db {
-    return $connection || ($connection = DBIx::Simple->new("DBI:mysql:database=snmp", "", ""));
+    return $connection || ($connection = DBIx::Simple->new("DBI:mysql:database=snmp", "root", ""));
 }
 
 sub device {
