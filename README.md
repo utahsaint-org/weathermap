@@ -4,7 +4,7 @@
 
 2. After Ubuntu is installed, log in and run the Weathermap setup script
 
-    `]$ perl <(wget -q -O - https://raw.githubusercontent.com/proguen/weathermap/master/install/setup.pl)
+    `]$ perl <(wget -q -O - https://raw.githubusercontent.com/proguen/weathermap/master/install/setup.pl)`
 
 3. When the script completes, edit `/opt/weathermap/conf/config.js` to set the default SNMP community for your devices
 
