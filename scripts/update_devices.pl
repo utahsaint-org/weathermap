@@ -12,12 +12,15 @@ use Carp;
 
 my $db = Database->db;
 
-poll_int_config();
+while (1) {
+    poll_int_config();
+    sleep 15 * 60; # Poll device interfaces every 15 minutes
+}
 
 # Update device configuration
 sub poll_int_config {
     my $default_community;
-    eval { chomp($default_community = `node -e 'console.log(require("/opt/weathermap/conf/config.js").defaultCommunity)' 2>/dev/null`); };
+    eval { chomp($default_community = `nodejs -e 'console.log(require("/opt/weathermap/conf/config.js").defaultCommunity)' 2>/dev/null`); };
 
     my (%ints, %sysname);
     for my $device (@{Database->devices}) {

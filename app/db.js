@@ -1,7 +1,7 @@
 var last;
 var mysql = require('mysql'),
     crypto = require('crypto'),
-    config = { user: '', password: '', database: 'snmp', 'supportBigNumbers': true },
+    config = { user: 'root', password: '', database: 'snmp', 'supportBigNumbers': true },
     _ = require('underscore'),
     conn,
     db;

@@ -1,8 +1,8 @@
 var express = require('express'),
-config = require('./conf/config'),
+config = require('../conf/config'),
 app = express(),
 _ = require('underscore'),
-db = require('./lib/db');
+db = require('./db');
 
 //app.use(express.logger());
 app.use(express.compress());
@@ -14,7 +14,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('/', express.static(__dirname + '/public'));
+app.use('/', express.static(__dirname + '/../public'));
 
 app.get('/api', function(req, res) {
     res.status(200).sendfile('api.html');
@@ -163,7 +163,7 @@ app.put('/api/device', function(req, res) {
 
 	    var id = result.insertId;
 
-	    require('child_process').exec("(cd " + __dirname + '/scripts; ./update_devices.pl ' + ip + ')', function(error, stdout, stderr) {
+	    require('child_process').exec("(cd " + __dirname + '/../scripts; ./update_devices.pl ' + ip + ')', function(error, stdout, stderr) {
 		query({type:"device", where: {id: id, ip: ip}},
 		    function(err, results) {
 			res.json({status: "OK", device: results[0]});
