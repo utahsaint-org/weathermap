@@ -8,8 +8,8 @@ system("apt-get install -y git libcommon-sense-perl libdbix-simple-perl libnet-s
 print " Done\n";
 
 print "\nInstalling MySQL -- leave root passwords blank when prompted\n";
-print "Press a key to continue\n";
-system("bash -c 'read -n 1 -s'");
+print "Press <ENTER> to continue\n";
+<STDIN>;
 system("apt-get install -y mysql-server");
 
 print "\nInstalling Weathermap ... ";
