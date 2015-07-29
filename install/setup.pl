@@ -43,6 +43,7 @@ if(system("echo 'select 1' | mysql -u root snmp >/dev/null 2>&1")) {
 print "  Finalizing setup .. ";
 run_command("cd /opt/weathermap && sudo npm install >/dev/null 2>&1");
 run_command("sudo cp /opt/weathermap/install/weathermap-app.conf /opt/weathermap/install/weathermap-poller.conf /opt/weathermap/install/weathermap-updater.conf /etc/init >/dev/null");
+run_command("sudo cp /opt/weathermap/conf/config.js.README /opt/weathermap/conf/config.js >/dev/null");
 print "Done\n";
 
 print "\n\n ** Edit /opt/weathermap/conf/config.js, then restart **\n\n";
