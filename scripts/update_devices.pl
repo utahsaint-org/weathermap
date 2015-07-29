@@ -14,6 +14,7 @@ my $db = Database->db;
 
 while (1) {
     poll_int_config();
+    last if $ARGV[0]; # Exit if it's just one device
     sleep 15 * 60; # Poll device interfaces every 15 minutes
 }
 
