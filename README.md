@@ -19,3 +19,5 @@
     ```
 
 5. When the server finishes booting, connect to `http://<server IP>/admin` to configure devices and circuits
+
+Refer to Configuration.md for instructions on creating maps
