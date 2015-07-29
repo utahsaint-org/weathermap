@@ -23,7 +23,7 @@ print "\nInstalling MySQL server -- \n ** leave MySQL root password blank - just
 print "Press any key to continue\n";
 keypress();
 run_command("sudo apt-get install -y mysql-server");
-print "\n  Done installing MySQL server\n";
+print "\n\n  Done installing MySQL server\n";
 
 print "\nInstalling Weathermap\n";
 if (-e "/opt/weathermap" && -e "/opt/weathermap/.git") {
@@ -44,6 +44,7 @@ print "  Finalizing setup .. ";
 run_command("cd /opt/weathermap && sudo npm install >/dev/null 2>&1");
 run_command("sudo cp /opt/weathermap/install/weathermap-app.conf /opt/weathermap/install/weathermap-poller.conf /opt/weathermap/install/weathermap-updater.conf /etc/init >/dev/null");
 run_command("sudo cp /opt/weathermap/conf/config.js.README /opt/weathermap/conf/config.js >/dev/null");
+run_command("sudo cp /opt/weathermap/public/maps/config.json.TEMPLATE /opt/weathermap/public/maps/config.json >/dev/null");
 print "Done\n";
 
 print "\n\n ** Edit /opt/weathermap/conf/config.js, then restart **\n\n";
