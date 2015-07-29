@@ -4,12 +4,8 @@ $| = 1;
 run_command("sudo true"); # Prompt for sudo password right away
 
 print "\n\nSetting up Weathermap\n";
-print "\nUpdating Ubuntu\n  apt-get update ";
+print "\nUpdating apt-get directories\n  apt-get update ";
 run_command("sudo apt-get -y update", 1);
-print " Done\n  apt-get upgrade ";
-run_command("sudo apt-get -y upgrade", 1);
-print " Done\n  aptitude safe-upgrade ";
-run_command("sudo aptitude -y safe-upgrade", 1);
 print " Done\n";
 
 print "\nInstalling required packages\n";
@@ -43,11 +39,15 @@ if(system("echo 'select 1' | mysql -u root snmp >/dev/null 2>&1")) {
 print "  Finalizing setup .. ";
 run_command("cd /opt/weathermap && sudo npm install >/dev/null 2>&1");
 run_command("sudo cp /opt/weathermap/install/weathermap-app.conf /opt/weathermap/install/weathermap-poller.conf /opt/weathermap/install/weathermap-updater.conf /etc/init >/dev/null");
-run_command("sudo cp /opt/weathermap/conf/config.js.README /opt/weathermap/conf/config.js >/dev/null");
-run_command("sudo cp /opt/weathermap/public/maps/config.json.TEMPLATE /opt/weathermap/public/maps/config.json >/dev/null");
+unless (-e "/opt/weathermap/conf/config.js") {
+    run_command("sudo cp /opt/weathermap/conf/config.js.README /opt/weathermap/conf/config.js >/dev/null");
+    print "\n\n ** Edit /opt/weathermap/conf/config.js before restarting **\n\n";
+}
+run_command("sudo cp /opt/weathermap/public/maps/config.json.TEMPLATE /opt/weathermap/public/maps/config.json >/dev/null")
+    unless -e "/opt/weathermap/public/maps/config.json";
 print "Done\n";
 
-print "\n\n ** Edit /opt/weathermap/conf/config.js, then restart **\n\n";
+print "\nRestart server after completing any necessary customizing\n";
 
 sub run_command {
     my ($command, $show_progress) = @_;
