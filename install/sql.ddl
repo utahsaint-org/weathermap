@@ -37,6 +37,7 @@ CREATE TABLE `interface` (
   `speed` bigint(20) unsigned DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `status` tinyint(3) unsigned DEFAULT NULL,
+  `admin` tinyint(3) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=latin1;
 

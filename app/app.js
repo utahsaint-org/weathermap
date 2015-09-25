@@ -196,7 +196,7 @@ app.post('/api/device/:id', function(req, res) {
 app.get('/api/device/:device_id/interface/list', function(req, res) {
     var where = "1=1";
     if (req.query.active == 1) {
-	where += " AND status = 1";
+	where += " AND (status = 1 OR admin = 1 AND LENGTH(description) > 0)";
     }
     if (req.query.mpls == 0) {
 	where += ' AND name NOT LIKE "%mpls layer%"';

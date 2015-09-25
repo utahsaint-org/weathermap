@@ -45,6 +45,7 @@ sub poll_int_config {
 		     ifSpeed => 'speed',
 		     ifHighSpeed => 'high_speed',
 		     ifOperStatus => 'status',
+		     ifAdminStatus => 'admin',
 		     ifAlias => 'description',
 		     ifSysname => 'sysname',
 	};
@@ -106,7 +107,7 @@ sub poll_int_config {
 	    # Check whether an existing interface needs updating
 	    if (my $row = $db_ints->{$name}) {
 		my $updates = {};
-		for (qw/name 64bit speed description snmp_index status/) {
+		for (qw/name 64bit speed description snmp_index status admin/) {
 		    if (exists $row->{$_} && ($row->{$_}+0 != $int->{$_}+0 || $row->{$_} ne $int->{$_})) {
 			$updates->{$_} = $int->{$_};
 		    }
@@ -122,8 +123,9 @@ sub poll_int_config {
 	    }
 	}
 
-	# Delete any interfaces not in SNMP results
-	$db->delete('interface', { device_id => $device_id, name => { -not_in => \@names } });
+	# Delete any interfaces not in SNMP results, and not associated with a defined circuit
+	my $associated_interfaces = Database->db->select('circuit_end inner join circuit on circuit.id = circuit_id',['distinct(interface_id)'])->flat;
+	$db->delete('interface', { device_id => $device_id, name => { -not_in => \@names }, id => { -not_in => $associated_interfaces } });
     }
 }
 
