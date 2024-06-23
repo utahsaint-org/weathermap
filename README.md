@@ -1,3 +1,5 @@
+# DEPRECATED - Deleting in 2025
+
 # Weathermap installation
 
 1. Install Ubuntu 14.04 64-bit - optionally install the OpenSSH package
